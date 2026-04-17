@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proposta — Cristiano</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #000000;
+      --white: #ffffff;
+      --gray-400: #a3a3a3;
+      --gray-500: #737373;
+      --gray-600: #525252;
+      --gray-700: #404040;
+      --gray-800: #262626;
+      --gray-900: #171717;
+      --accent: #8b5cf6;
+      --accent-dim: rgba(139,92,246,0.15);
+      --green: #22c55e;
+      --green-dim: rgba(34,197,94,0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: var(--white); color: var(--black); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.25rem 3rem;
+      display: flex; justify-content: space-between; align-items: center;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(0,0,0,0.7);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: all 0.4s ease;
+    }
+    nav.scrolled { padding: 0.85rem 3rem; }
+    .nav-logo { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: -0.03em; }
+    .nav-logo span { color: var(--gray-500); font-weight: 300; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: var(--gray-400); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.02em; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--white); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center;
+      padding: 8rem 2rem 4rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -40%; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(139,92,246,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.45rem 1.2rem; border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 100px; font-size: 0.75rem; color: var(--gray-400);
+      letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2.5rem;
+      opacity: 0; animation: fadeUp 1s 0.2s forwards;
+    }
+    .hero-badge .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+    .hero h1 {
+      font-family: 'Outfit', sans-serif; font-size: clamp(3.2rem, 8vw, 7.5rem);
+      font-weight: 700; letter-spacing: -0.04em; line-height: 0.95; max-width: 900px;
+      opacity: 0; animation: fadeUp 1s 0.4s forwards;
+    }
+    .hero h1 .thin { font-weight: 200; color: var(--gray-500); }
+    .hero-sub {
+      margin-top: 2rem; font-size: 1.15rem; color: var(--gray-400);
+      max-width: 560px; line-height: 1.7; font-weight: 300;
+      opacity: 0; animation: fadeUp 1s 0.6s forwards;
+    }
+    .hero-sub strong { color: var(--white); font-weight: 500; }
+    .scroll-indicator {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      opacity: 0; animation: fadeUp 1s 1s forwards;
+    }
+    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gray-500), transparent); animation: scrollPulse 2s infinite; }
+
+    /* ── SECTIONS ── */
+    section { padding: 8rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .section-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 1.5rem; font-weight: 500; }
+    .section-title { font-family: 'Outfit', sans-serif; font-size: clamp(2.2rem, 4.5vw, 3.8rem); font-weight: 700; letter-spacing: -0.035em; line-height: 1.1; max-width: 700px; }
+    .section-title .muted { color: var(--gray-600); }
+    .bordered { border-top: 1px solid rgba(255,255,255,0.06); }
+    .fade-section { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.23,1,0.32,1); }
+    .fade-section.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── WHAT SECTION - SERVICES ── */
+    .services-grid {
+      margin-top: 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 3rem;
+      background: rgba(255,255,255,0.015);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s;
+    }
+
+    .service-card:hover {
+      border-color: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.025);
+    }
+
+    .service-card.featured {
+      background: linear-gradient(135deg, rgba(139,92,246,0.08) 0%, rgba(139,92,246,0.02) 100%);
+      border-color: rgba(139,92,246,0.2);
+    }
+
+    .service-card.featured:hover {
+      border-color: rgba(139,92,246,0.35);
+    }
+
+    .service-icon {
+      width: 56px; height: 56px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-card.featured .service-icon {
+      background: var(--accent-dim);
+      border-color: rgba(139,92,246,0.3);
+    }
+
+    .service-tag {
+      display: inline-block;
+      padding: 0.25rem 0.7rem;
+      border-radius: 100px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .tag-implementation { background: rgba(96,165,250,0.12); color: #60a5fa; border: 1px solid rgba(96,165,250,0.2); }
+    .tag-monthly { background: var(--green-dim); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
+    .tag-consulting { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
+
+    .service-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.6rem;
+    }
+
+    .service-card p {
+      font-size: 0.88rem;
+      color: var(--gray-400);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .service-features {
+      list-style: none;
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .service-features li {
+      font-size: 0.82rem;
+      color: var(--gray-400);
+      line-height: 1.5;
+      font-weight: 300;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+    }
+
+    .service-features li::before {
+      content: '>';
+      color: var(--gray-600);
+      font-family: monospace;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+
+    .service-card.featured .service-features li::before {
+      color: var(--accent);
+    }
+
+    .service-price {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .service-price-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-600);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .service-price-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .service-price-value .currency {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--gray-500);
+      vertical-align: top;
+      margin-right: 0.05em;
+    }
+
+    .service-price-sub {
+      font-size: 0.82rem;
+      color: var(--gray-500);
+      font-weight: 300;
+      margin-top: 0.3rem;
+    }
+
+    /* ── HOW IT WORKS - VISUAL ── */
+    .how-grid {
+      margin-top: 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .how-block h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .how-block h3 .how-num {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--gray-400);
+      flex-shrink: 0;
+    }
+
+    .how-block p {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      line-height: 1.6;
+      font-weight: 300;
+      margin-left: 2.3rem;
+    }
+
+    .how-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* ── AGENT VISUAL DEMO ── */
+    .agent-demo {
+      margin-top: 4rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.015);
+    }
+
+    .agent-demo-header {
+      padding: 1.2rem 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.82rem;
+    }
+
+    .agent-demo-header .live-dot {
+      width: 8px; height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .agent-demo-header span { color: var(--gray-400); }
+
+    .agent-chat {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      min-height: 340px;
+    }
+
+    .agent-msg {
+      max-width: 80%;
+      padding: 1rem 1.4rem;
+      border-radius: 16px;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      animation: msgAppear 0.5s ease forwards;
+    }
+
+    .agent-msg.client {
+      align-self: flex-end;
+      background: var(--accent-dim);
+      border: 1px solid rgba(139,92,246,0.2);
+      color: var(--white);
+      border-bottom-right-radius: 4px;
+    }
+
+    .agent-msg.bot {
+      align-self: flex-start;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--gray-400);
+      border-bottom-left-radius: 4px;
+      font-weight: 300;
+    }
+
+    .agent-msg.bot strong { color: var(--white); font-weight: 500; }
+
+    .agent-time {
+      font-size: 0.65rem;
+      color: var(--gray-700);
+      text-align: center;
+      letter-spacing: 0.06em;
+    }
+
+    @keyframes msgAppear {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── ROI CALCULATOR ── */
+    .roi-section {
+      margin-top: 4rem;
+    }
+
+    .roi-card {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 3.5rem;
+      background: rgba(255,255,255,0.015);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .roi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139,92,246,0.3), transparent);
+    }
+
+    .roi-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .roi-header-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(139,92,246,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .roi-header h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .roi-header p {
+      font-size: 0.78rem;
+      color: var(--gray-500);
+      font-weight: 300;
+    }
+
+    .roi-slider-group {
+      margin-bottom: 2rem;
+    }
+
+    .roi-slider-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+    }
+
+    .roi-slider-label span {
+      font-size: 0.82rem;
+      color: var(--gray-400);
+      font-weight: 400;
+    }
+
+    .roi-slider-label .roi-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      background: var(--gray-800);
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 3px solid var(--black);
+      box-shadow: 0 0 10px rgba(255,255,255,0.2);
+      cursor: pointer;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 3px solid var(--black);
+      box-shadow: 0 0 10px rgba(255,255,255,0.2);
+      cursor: pointer;
+    }
+
+    .roi-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+      margin: 2.5rem 0;
+    }
+
+    .roi-results {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .roi-result {
+      padding: 1.5rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .roi-result-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-600);
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+
+    .roi-result-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .roi-result-sub {
+      font-size: 0.75rem;
+      color: var(--gray-500);
+      margin-top: 0.3rem;
+      font-weight: 300;
+    }
+
+    .roi-result-value.green { color: #4ade80; }
+    .roi-result-value.red { color: #f87171; }
+    .roi-result-value.accent { color: #c084fc; }
+
+    /* ── COMPARISON BAR ── */
+    .comparison-bars {
+      margin-top: 2.5rem;
+    }
+
+    .comparison-bars h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--gray-400);
+    }
+
+    .comp-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .comp-bar-label {
+      font-size: 0.78rem;
+      color: var(--gray-500);
+      width: 140px;
+      flex-shrink: 0;
+      font-weight: 400;
+    }
+
+    .comp-bar-track {
+      flex: 1;
+      height: 28px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .comp-bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      padding-left: 0.8rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--white);
+      transition: width 1.5s cubic-bezier(0.23,1,0.32,1);
+      width: 0;
+    }
+
+    .comp-bar-fill.agency { background: rgba(239,68,68,0.25); border: 1px solid rgba(239,68,68,0.3); }
+    .comp-bar-fill.ai { background: rgba(34,197,94,0.25); border: 1px solid rgba(34,197,94,0.3); }
+
+    .visible .comp-bar-fill.agency { width: var(--bar-w); }
+    .visible .comp-bar-fill.ai { width: var(--bar-w); }
+
+    /* ── PRICING ── */
+    .pricing-grid {
+      margin-top: 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .pricing-left {
+      padding: 3.5rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-right: none;
+      border-radius: 24px 0 0 24px;
+    }
+
+    .pricing-left .plabel {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-500);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .pricing-left h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 2rem;
+    }
+
+    .pricing-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .pricing-item:last-child { border-bottom: none; }
+
+    .pricing-item-name {
+      font-size: 0.88rem;
+      color: var(--gray-400);
+      font-weight: 400;
+    }
+
+    .pricing-item-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .pricing-total {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pricing-total-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .pricing-total-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .pricing-right {
+      padding: 3.5rem;
+      background: linear-gradient(135deg, #1a1040 0%, #2d1b69 50%, #1e1145 100%);
+      border-radius: 0 24px 24px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-right::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle at 70% 30%, rgba(139,92,246,0.15), transparent 60%);
+      pointer-events: none;
+    }
+
+    .pricing-right .star {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 200;
+      color: rgba(168,85,247,0.6);
+      margin-bottom: 0.8rem;
+    }
+
+    .pricing-right h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pricing-right .price-sub {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pricing-right .big-price {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pricing-right .big-price .currency {
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.5);
+      vertical-align: top;
+      margin-right: 0.1em;
+    }
+
+    .pricing-right .monthly-note {
+      margin-top: 1.5rem;
+      padding: 0.8rem 1.5rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pricing-right .monthly-note .mn-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .pricing-right .monthly-note .mn-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .pricing-right .monthly-note .mn-sub {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.4);
+      font-weight: 300;
+      margin-top: 0.2rem;
+    }
+
+    .pricing-right .includes-badge {
+      margin-top: 1.2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pricing-right .includes-badge li {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.3rem;
+      list-style: none;
+    }
+
+    .pricing-right .includes-badge li::before {
+      content: '>';
+      color: rgba(139,92,246,0.6);
+      font-family: monospace;
+      font-size: 0.65rem;
+    }
+
+    /* ── ROADMAP PINS ── */
+    .rm-visual { position: relative; }
+
+    .rm-pin {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .rm-pin-marker {
+      filter: drop-shadow(0 0 8px rgba(139,92,246,0.3));
+      z-index: 4;
+      transition: transform 0.3s;
+    }
+
+    .rm-pin:hover .rm-pin-marker { transform: scale(1.2) translateY(-3px); }
+
+    .rm-pin-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      margin-top: 0.4rem;
+      white-space: nowrap;
+    }
+
+    .rm-pin-card {
+      position: absolute;
+      width: 220px;
+      padding: 1.2rem;
+      background: rgba(0,0,0,0.85);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.3s;
+    }
+
+    .rm-pin:hover .rm-pin-card {
+      border-color: rgba(255,255,255,0.2);
+      transform: translateX(-50%) scale(1.03);
+    }
+
+    .rm-pin-card.rm-above {
+      bottom: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .rm-pin-card.rm-below {
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .rm-pin-sprint {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+
+    .rm-pin-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.3rem;
+      color: var(--white);
+    }
+
+    .rm-pin-desc {
+      font-size: 0.72rem;
+      color: var(--gray-500);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    /* ── CTA ── */
+    .final-cta {
+      text-align: center;
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .final-cta h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+    .final-cta h2 .muted { color: var(--gray-600); }
+    .final-cta p {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: var(--gray-500);
+      font-weight: 300;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 3rem;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--gray-600);
+    }
+    footer span { color: var(--gray-500); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    @keyframes scrollPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      nav.scrolled { padding: 0.7rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 5rem 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .how-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .roi-results { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .pricing-left { border-radius: 24px 24px 0 0; border-right: 1px solid rgba(255,255,255,0.08); border-bottom: none; }
+      .pricing-right { border-radius: 0 0 24px 24px; }
+      .comp-bar-row { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .comp-bar-label { width: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PASSWORD GATE -->
+  <div id="pw-gate" style="position:fixed;inset:0;z-index:9999;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1.5rem;">
+    <div style="font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:-0.03em;color:#fff;">Lucas Lopes <span style="color:#737373;font-weight:300;">/ proposta</span></div>
+    <p style="color:#737373;font-size:0.85rem;margin-top:-0.5rem;">Digite a senha para acessar</p>
+    <input id="pw-in" type="password" placeholder="Senha" autofocus style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:0.9rem 1.4rem;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.95rem;width:280px;outline:none;text-align:center;transition:border-color 0.3s;">
+    <p id="pw-err" style="color:#ef4444;font-size:0.8rem;opacity:0;transition:opacity 0.3s;">Senha incorreta</p>
+  </div>
+  <script>
+    (function(){var g=document.getElementById('pw-gate'),i=document.getElementById('pw-in'),e=document.getElementById('pw-err');
+    i.addEventListener('keydown',function(ev){if(ev.key==='Enter'){if(i.value==='cristiano2026'){g.style.opacity='0';g.style.transition='opacity 0.5s';setTimeout(function(){g.style.display='none'},500)}else{e.style.opacity='1';i.style.borderColor='rgba(239,68,68,0.5)';setTimeout(function(){e.style.opacity='0';i.style.borderColor='rgba(255,255,255,0.12)'},2000)}}});
+    i.addEventListener('focus',function(){i.style.borderColor='rgba(255,255,255,0.3)'});i.addEventListener('blur',function(){i.style.borderColor='rgba(255,255,255,0.12)'});})();
+  </script>
+
+  <nav>
+    <div class="nav-logo">Lucas Lopes <span>/ proposta</span></div>
+    <ul class="nav-links">
+      <li><a href="#solucoes">O que inclui</a></li>
+      <li><a href="#como-funciona">Como funciona</a></li>
+      <li><a href="#roi">Calculadora ROI</a></li>
+      <li><a href="#investimento">Investimento</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge"><span class="dot"></span>Proposta — Cristiano</div>
+    <h1>I.A. que<br><span class="thin">trabalha por voce.</span></h1>
+    <p class="hero-sub">Agente de atendimento <strong>24 horas por dia</strong>, consultoria em Claude para <strong>criar conteudos que vendem</strong> e economia real comparado a agencia tradicional.</p>
+    <div class="scroll-indicator"><div class="scroll-line"></div></div>
+  </section>
+
+  <!-- O QUE INCLUI -->
+  <section class="bordered fade-section" id="solucoes">
+    <p class="section-label">O que voce recebe</p>
+    <h2 class="section-title">Duas solucoes,<br><span class="muted">um resultado.</span></h2>
+
+    <div class="services-grid">
+
+      <!-- AGENTE DE I.A -->
+      <div class="service-card featured">
+        <div class="service-icon">🤖</div>
+        <span class="tag-implementation">Implementacao</span>
+        <h3>Agente de I.A. 24/7</h3>
+        <p>Um atendente inteligente que nunca dorme. Responde seus clientes no WhatsApp, Instagram ou site a qualquer hora, com a personalidade e conhecimento do seu negocio.</p>
+        <ul class="service-features">
+          <li>Atendimento automatico no WhatsApp e Instagram</li>
+          <li>Treinado com os dados e tom de voz do seu negocio</li>
+          <li>Qualifica leads e agenda reunioes sozinho</li>
+          <li>Responde duvidas frequentes com precisao</li>
+          <li>Envia para voce apenas os contatos quentes</li>
+          <li>Funciona 24h, feriados e finais de semana</li>
+        </ul>
+      </div>
+
+      <!-- CONSULTORIA CLAUDE -->
+      <div class="service-card">
+        <div class="service-icon">⚡</div>
+        <span class="tag-consulting">Consultoria</span>
+        <h3>Consultoria Claude para Conteudo</h3>
+        <p>2 sessoes de consultoria pratica onde voce aprende a usar o Claude para criar carrosseis, roteiros, legendas e conteudos que geram engajamento e vendas.</p>
+        <ul class="service-features">
+          <li>2 sessoes de acompanhamento ao vivo</li>
+          <li>Templates prontos para carrosseis de alta conversao</li>
+          <li>Fluxos de criacao de conteudo com I.A.</li>
+          <li>Roteiros para Reels e Stories que engajam</li>
+          <li>Legendas otimizadas para conversao</li>
+          <li>Prompts personalizados pro seu nicho</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- QUEM É LUCAS -->
+  <section class="bordered fade-section" id="sobre">
+    <p class="section-label">Quem esta por tras</p>
+    <h2 class="section-title">Lucas Lopes</h2>
+
+    <div style="margin-top:3rem; display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center;">
+      <!-- Avatar / visual -->
+      <div style="position:relative; display:flex; justify-content:center; align-items:center;">
+        <div style="width:280px; height:340px; border-radius:24px; background:linear-gradient(135deg, rgba(239,68,68,0.15) 0%, rgba(139,92,246,0.1) 100%); border:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+          <!-- Barra vermelha lateral -->
+          <div style="position:absolute; left:0; top:0; bottom:0; width:6px; background:linear-gradient(180deg, #ef4444, #dc2626); border-radius:3px 0 0 3px;"></div>
+          <!-- Nome vertical -->
+          <div style="position:absolute; left:16px; top:50%; transform:translateY(-50%) rotate(-90deg); font-family:'Outfit',sans-serif; font-size:1.8rem; font-weight:800; color:rgba(255,255,255,0.04); letter-spacing:0.1em; text-transform:uppercase; white-space:nowrap;">Lucas Lopes</div>
+          <!-- Icone -->
+          <svg width="100" height="100" viewBox="0 0 24 24" fill="none" style="opacity:0.15;">
+            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" fill="currentColor"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Credenciais -->
+      <div style="display:flex; flex-direction:column; gap:1.2rem;">
+        <div style="display:flex; align-items:flex-start; gap:1rem;">
+          <div style="width:8px; height:8px; border-radius:2px; background:#ef4444; flex-shrink:0; margin-top:0.45rem;"></div>
+          <div style="font-size:0.95rem; color:var(--gray-300); line-height:1.6; font-weight:400;">6 anos atuando com tecnologia e <strong style="color:var(--white);">+ de 450 projetos</strong> em automacoes e I.A</div>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:1rem;">
+          <div style="width:8px; height:8px; border-radius:2px; background:#ef4444; flex-shrink:0; margin-top:0.45rem;"></div>
+          <div style="font-size:0.95rem; color:var(--gray-300); line-height:1.6; font-weight:400;">Conselheiro e Mentor de <strong style="color:var(--white);">+ de 50 alunos</strong> em Agentes de I.A e automacoes</div>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:1rem;">
+          <div style="width:8px; height:8px; border-radius:2px; background:#ef4444; flex-shrink:0; margin-top:0.45rem;"></div>
+          <div style="font-size:0.95rem; color:var(--gray-300); line-height:1.6; font-weight:400;">Socio diretor da <strong style="color:var(--white);">Winner.IA</strong> & <strong style="color:var(--white);">ImpulSales</strong></div>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:1rem;">
+          <div style="width:8px; height:8px; border-radius:2px; background:#ef4444; flex-shrink:0; margin-top:0.45rem;"></div>
+          <div style="font-size:0.95rem; color:var(--gray-300); line-height:1.6; font-weight:400;">Atuou no setor de tecnologia de grandes empresas (<strong style="color:var(--white);">Algar Telecom, Board Academy, Maira Cardi, Grupo Pediatra de Consultorio</strong>)</div>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:1rem;">
+          <div style="width:8px; height:8px; border-radius:2px; background:#ef4444; flex-shrink:0; margin-top:0.45rem;"></div>
+          <div style="font-size:0.95rem; color:var(--gray-300); line-height:1.6; font-weight:400;">Economista pela <strong style="color:var(--white);">UFU</strong> com MBA em financas pela <strong style="color:var(--white);">FGV</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section class="bordered fade-section" id="como-funciona">
+    <p class="section-label">Na pratica</p>
+    <h2 class="section-title">Como funciona<br><span class="muted">no dia a dia.</span></h2>
+
+    <!-- ═══ ROADMAP AGENTE ═══ -->
+    <div style="margin-top:4rem;">
+      <div style="font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:2rem; display:flex; align-items:center; gap:0.6rem;">
+        <span style="width:8px; height:8px; background:var(--accent); border-radius:50%;"></span>
+        Agente de I.A. 24/7
+      </div>
+
+      <div class="rm-visual" style="position:relative; min-height:420px;">
+        <svg viewBox="0 0 1000 400" fill="none" style="width:100%;height:auto;position:absolute;top:0;left:0;pointer-events:none;" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="roadGrad1" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="rgba(139,92,246,0.08)"/>
+              <stop offset="50%" stop-color="rgba(139,92,246,0.15)"/>
+              <stop offset="100%" stop-color="rgba(139,92,246,0.25)"/>
+            </linearGradient>
+          </defs>
+          <path d="M 50,320 C 200,320 220,80 400,80 C 580,80 600,300 780,300 C 880,300 950,200 950,140" stroke="url(#roadGrad1)" stroke-width="50" stroke-linecap="round" fill="none" opacity="0.7"/>
+          <path d="M 50,320 C 200,320 220,80 400,80 C 580,80 600,300 780,300 C 880,300 950,200 950,140" stroke="rgba(139,92,246,0.04)" stroke-width="52" stroke-linecap="round" fill="none"/>
+          <path d="M 50,320 C 200,320 220,80 400,80 C 580,80 600,300 780,300 C 880,300 950,200 950,140" stroke="rgba(139,92,246,0.1)" stroke-width="2" stroke-dasharray="12 8" stroke-linecap="round" fill="none"/>
+        </svg>
+
+        <!-- Pin: Inicio -->
+        <div class="rm-pin" style="left:3%;top:68%;">
+          <div class="rm-pin-marker" style="color:#8b5cf6;">
+            <svg width="20" height="28" viewBox="0 0 20 28"><path d="M10 0C4.5 0 0 4.5 0 10c0 7.5 10 18 10 18s10-10.5 10-18C20 4.5 15.5 0 10 0z" fill="currentColor"/><circle cx="10" cy="10" r="4" fill="#000" opacity="0.3"/></svg>
+          </div>
+          <div class="rm-pin-label" style="color:var(--gray-500);">Inicio</div>
+        </div>
+
+        <!-- Pin: Semana 1 -->
+        <div class="rm-pin" style="left:16%;top:32%;">
+          <div class="rm-pin-marker" style="color:#a78bfa;">
+            <svg width="20" height="28" viewBox="0 0 20 28"><path d="M10 0C4.5 0 0 4.5 0 10c0 7.5 10 18 10 18s10-10.5 10-18C20 4.5 15.5 0 10 0z" fill="currentColor"/><circle cx="10" cy="10" r="4" fill="#000" opacity="0.3"/></svg>
+          </div>
+          <div class="rm-pin-card rm-above">
+            <div class="rm-pin-sprint">Semana 1</div>
+            <div class="rm-pin-title">Coleta de Infos</div>
+            <div class="rm-pin-desc">Mapeio seu negocio, produtos, duvidas frequentes, tom de voz e fluxo de atendimento</div>
+          </div>
+        </div>
+
+        <!-- Pin: Semana 2 -->
+        <div class="rm-pin" style="left:37%;top:6%;">
+          <div class="rm-pin-marker" style="color:#c084fc;">
+            <svg width="20" height="28" viewBox="0 0 20 28"><path d="M10 0C4.5 0 0 4.5 0 10c0 7.5 10 18 10 18s10-10.5 10-18C20 4.5 15.5 0 10 0z" fill="currentColor"/><circle cx="10" cy="10" r="4" fill="#000" opacity="0.3"/></svg>
+          </div>
+          <div class="rm-pin-card rm-below">
+            <div class="rm-pin-sprint">Semana 2</div>
+            <div class="rm-pin-title">Primeira Versao</div>
+            <div class="rm-pin-desc">Agente configurado e funcionando em ambiente de teste pra voce aprovar</div>
+          </div>
+        </div>
+
+        <!-- Pin: Semana 3 -->
+        <div class="rm-pin" style="left:60%;top:52%;">
+          <div class="rm-pin-marker" style="color:#d8b4fe;">
+            <svg width="20" height="28" viewBox="0 0 20 28"><path d="M10 0C4.5 0 0 4.5 0 10c0 7.5 10 18 10 18s10-10.5 10-18C20 4.5 15.5 0 10 0z" fill="currentColor"/><circle cx="10" cy="10" r="4" fill="#000" opacity="0.3"/></svg>
+          </div>
+          <div class="rm-pin-card rm-above">
+            <div class="rm-pin-sprint">Semana 3</div>
+            <div class="rm-pin-title">Ajustes</div>
+            <div class="rm-pin-desc">Refinamos respostas, fluxos e integracao com WhatsApp e Instagram</div>
+          </div>
+        </div>
+
+        <!-- Pin: Semana 4 -->
+        <div class="rm-pin" style="left:78%;top:58%;">
+          <div class="rm-pin-marker" style="color:#e9d5ff;">
+            <svg width="20" height="28" viewBox="0 0 20 28"><path d="M10 0C4.5 0 0 4.5 0 10c0 7.5 10 18 10 18s10-10.5 10-18C20 4.5 15.5 0 10 0z" fill="currentColor"/><circle cx="10" cy="10" r="4" fill="#000" opacity="0.3"/></svg>
+          </div>
+          <div class="rm-pin-card rm-below">
+            <div class="rm-pin-sprint">Semana 4</div>
+            <div class="rm-pin-title">Ativacao</div>
+            <div class="rm-pin-desc">Agente ativado em producao, atendendo seus clientes 24 horas por dia</div>
+          </div>
+        </div>
+
+        <!-- Pin: Final -->
+        <div class="rm-pin" style="left:93%;top:22%;">
+          <div class="rm-pin-marker" style="color:#22c55e;">
+            <svg width="20" height="28" viewBox="0 0 20 28"><path d="M10 0C4.5 0 0 4.5 0 10c0 7.5 10 18 10 18s10-10.5 10-18C20 4.5 15.5 0 10 0z" fill="currentColor"/><circle cx="10" cy="10" r="4" fill="#000" opacity="0.3"/></svg>
+          </div>
+          <div class="rm-pin-label" style="color:#22c55e;">Rodando 24/7</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ ROADMAP CONSULTORIA ═══ -->
+    <div style="margin-top:6rem;">
+      <div style="font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; color:#fbbf24; font-weight:600; margin-bottom:2rem; display:flex; align-items:center; gap:0.6rem;">
+        <span style="width:8px; height:8px; background:#fbbf24; border-radius:50%;"></span>
+        Consultoria Claude — Conteudo
+      </div>
+
+      <div class="rm-visual" style="position:relative; min-height:420px;">
+        <svg viewBox="0 0 1000 400" fill="none" style="width:100%;height:auto;position:absolute;top:0;left:0;pointer-events:none;" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="roadGrad2" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="rgba(251,191,36,0.08)"/>
+              <stop offset="50%" stop-color="rgba(251,191,36,0.15)"/>
+              <stop offset="100%" stop-color="rgba(251,191,36,0.25)"/>
+            </linearGradient>
+          </defs>
+          <path d="M 50,300 C 180,300 200,100 350,100 C 500,100 520,320 700,320 C 850,320 950,180 950,120" stroke="url(#roadGrad2)" stroke-width="50" stroke-linecap="round" fill="none" opacity="0.7"/>
+          <path d="M 50,300 C 180,300 200,100 350,100 C 500,100 520,320 700,320 C 850,320 950,180 950,120" stroke="rgba(251,191,36,0.04)" stroke-width="52" stroke-linecap="round" fill="none"/>
+          <path d="M 50,300 C 180,300 200,100 350,100 C 500,100 520,320 700,320 C 850,320 950,180 950,120" stroke="rgba(251,191,36,0.1)" stroke-width="2" stroke-dasharray="12 8" stroke-linecap="round" fill="none"/>
+        </svg>
+
+        <!-- Pin: Inicio -->
+        <div class="rm-pin" style="left:3%;top:62%;">
+          <div class="rm-pin-marker" style="color:#fbbf24;">
+            <svg width="20" height="28" viewBox="0 0 20 28"><path d="M10 0C4.5 0 0 4.5 0 10c0 7.5 10 18 10 18s10-10.5 10-18C20 4.5 15.5 0 10 0z" fill="currentColor"/><circle cx="10" cy="10" r="4" fill="#000" opacity="0.3"/></svg>
+          </div>
+          <div class="rm-pin-label" style="color:var(--gray-500);">Inicio</div>
+        </div>
+
+        <!-- Pin: Sessao 1 -->
+        <div class="rm-pin" style="left:18%;top:18%;">
+          <div class="rm-pin-marker" style="color:#fbbf24;">
+            <svg width="20" height="28" viewBox="0 0 20 28"><path d="M10 0C4.5 0 0 4.5 0 10c0 7.5 10 18 10 18s10-10.5 10-18C20 4.5 15.5 0 10 0z" fill="currentColor"/><circle cx="10" cy="10" r="4" fill="#000" opacity="0.3"/></svg>
+          </div>
+          <div class="rm-pin-card rm-below">
+            <div class="rm-pin-sprint" style="color:#fbbf24;">Sessao 1</div>
+            <div class="rm-pin-title">Setup + Primeiros Conteudos</div>
+            <div class="rm-pin-desc">Configuro Claude, crio prompts do seu nicho. Voce ja sai com carrosseis e legendas prontos</div>
+          </div>
+        </div>
+
+        <!-- Pin: Pratica -->
+        <div class="rm-pin" style="left:42%;top:10%;">
+          <div class="rm-pin-marker" style="color:#f59e0b;">
+            <svg width="20" height="28" viewBox="0 0 20 28"><path d="M10 0C4.5 0 0 4.5 0 10c0 7.5 10 18 10 18s10-10.5 10-18C20 4.5 15.5 0 10 0z" fill="currentColor"/><circle cx="10" cy="10" r="4" fill="#000" opacity="0.3"/></svg>
+          </div>
+          <div class="rm-pin-card rm-above">
+            <div class="rm-pin-sprint" style="color:#fbbf24;">Pratica</div>
+            <div class="rm-pin-title">Voce produzindo sozinho</div>
+            <div class="rm-pin-desc">Periodo entre sessoes pra voce praticar e anotar duvidas</div>
+          </div>
+        </div>
+
+        <!-- Pin: Sessao 2 -->
+        <div class="rm-pin" style="left:62%;top:58%;">
+          <div class="rm-pin-marker" style="color:#d97706;">
+            <svg width="20" height="28" viewBox="0 0 20 28"><path d="M10 0C4.5 0 0 4.5 0 10c0 7.5 10 18 10 18s10-10.5 10-18C20 4.5 15.5 0 10 0z" fill="currentColor"/><circle cx="10" cy="10" r="4" fill="#000" opacity="0.3"/></svg>
+          </div>
+          <div class="rm-pin-card rm-below">
+            <div class="rm-pin-sprint" style="color:#fbbf24;">Sessao 2</div>
+            <div class="rm-pin-title">Avancado + Templates</div>
+            <div class="rm-pin-desc">Refinamos prompts, criamos templates reutilizaveis e otimizamos seu fluxo</div>
+          </div>
+        </div>
+
+        <!-- Pin: Final -->
+        <div class="rm-pin" style="left:90%;top:16%;">
+          <div class="rm-pin-marker" style="color:#22c55e;">
+            <svg width="20" height="28" viewBox="0 0 20 28"><path d="M10 0C4.5 0 0 4.5 0 10c0 7.5 10 18 10 18s10-10.5 10-18C20 4.5 15.5 0 10 0z" fill="currentColor"/><circle cx="10" cy="10" r="4" fill="#000" opacity="0.3"/></svg>
+          </div>
+          <div class="rm-pin-label" style="color:#22c55e;">Autonomia total</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AGENT DEMO -->
+    <div class="agent-demo" style="margin-top:4rem;">
+      <div class="agent-demo-header">
+        <div class="live-dot"></div>
+        <span>Simulacao — Agente de I.A. em acao</span>
+      </div>
+      <div class="agent-chat" id="agent-chat">
+        <div class="agent-time">Hoje, 02:47 da manha</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROI CALCULATOR -->
+  <section class="bordered fade-section" id="roi">
+    <p class="section-label">Numeros reais</p>
+    <h2 class="section-title">Calculadora<br><span class="muted">de retorno.</span></h2>
+
+    <div class="roi-card" style="margin-top:3rem;">
+      <div class="roi-header">
+        <div class="roi-header-icon">📊</div>
+        <div>
+          <h3>Compare seu investimento</h3>
+          <p>Ajuste os valores e veja o impacto</p>
+        </div>
+      </div>
+
+      <div class="roi-slider-group">
+        <div class="roi-slider-label">
+          <span>Quanto voce investe hoje em agencia/marketing</span>
+          <span class="roi-val" id="val-agency">R$ 4.000/mes</span>
+        </div>
+        <input type="range" id="slider-agency" min="1000" max="10000" step="500" value="4000" oninput="calcROI()">
+      </div>
+
+      <div class="roi-slider-group">
+        <div class="roi-slider-label">
+          <span>Atendimentos que voce perde por mes (fora do horario, demora, etc)</span>
+          <span class="roi-val" id="val-lost">~20 contatos</span>
+        </div>
+        <input type="range" id="slider-lost" min="5" max="100" step="5" value="20" oninput="calcROI()">
+      </div>
+
+      <div class="roi-slider-group">
+        <div class="roi-slider-label">
+          <span>Ticket medio por cliente</span>
+          <span class="roi-val" id="val-ticket">R$ 500</span>
+        </div>
+        <input type="range" id="slider-ticket" min="100" max="5000" step="100" value="500" oninput="calcROI()">
+      </div>
+
+      <div class="roi-divider"></div>
+
+      <div class="roi-results">
+        <div class="roi-result">
+          <div class="roi-result-label">Receita perdida/mes</div>
+          <div class="roi-result-value red" id="roi-lost">R$ 10.000</div>
+          <div class="roi-result-sub">contatos que nao viraram venda</div>
+        </div>
+        <div class="roi-result">
+          <div class="roi-result-label">Se converter 30% com I.A.</div>
+          <div class="roi-result-value green" id="roi-recovered">R$ 3.000</div>
+          <div class="roi-result-sub">receita recuperada por mes</div>
+        </div>
+        <div class="roi-result">
+          <div class="roi-result-label">ROI em 12 meses</div>
+          <div class="roi-result-value accent" id="roi-total">580%</div>
+          <div class="roi-result-sub">retorno sobre investimento</div>
+        </div>
+      </div>
+
+      <!-- COMPARISON BARS -->
+      <div class="comparison-bars fade-section" style="margin-top:3rem;">
+        <h4>Custo anual: Agencia vs I.A.</h4>
+
+        <div class="comp-bar-row">
+          <div class="comp-bar-label">Agencia tradicional</div>
+          <div class="comp-bar-track">
+            <div class="comp-bar-fill agency" id="bar-agency" style="--bar-w:100%;">
+              <span id="bar-agency-val">R$ 48.000/ano</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="comp-bar-row">
+          <div class="comp-bar-label">I.A. + Consultoria</div>
+          <div class="comp-bar-track">
+            <div class="comp-bar-fill ai" id="bar-ai" style="--bar-w:50%;">
+              <span id="bar-ai-val">R$ 24.000/ano</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:1.5rem; text-align:center;">
+          <div style="font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gray-600); font-weight:600; margin-bottom:0.4rem;">Economia no primeiro ano</div>
+          <div style="font-family:'Outfit',sans-serif; font-size:2.2rem; font-weight:700; color:#4ade80; letter-spacing:-0.03em;" id="savings-val">R$ 24.000</div>
+          <div style="font-size:0.78rem; color:var(--gray-500); font-weight:300;" id="savings-sub">E ainda ganha atendimento 24h + autonomia na criacao de conteudo</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INVESTIMENTO -->
+  <section class="bordered fade-section" id="investimento">
+    <p class="section-label">Investimento</p>
+    <h2 class="section-title">Resumo<br><span class="muted">do investimento.</span></h2>
+
+    <!-- PRECO CHEIO -->
+    <div style="margin-top:3rem; border:1px solid rgba(255,255,255,0.08); border-radius:24px; padding:3.5rem; background:rgba(255,255,255,0.015);">
+      <div style="display:grid; grid-template-columns:1fr 1px 1fr; gap:3.5rem; align-items:start;">
+        <div>
+          <div style="font-family:'Outfit',sans-serif; font-size:0.68rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray-500); margin-bottom:1.5rem;">Preco do programa</div>
+          <div style="font-family:'Outfit',sans-serif; font-size:3.5rem; font-weight:700; letter-spacing:-0.03em; line-height:1;"><span style="font-size:1.8rem; font-weight:400; color:var(--gray-500); vertical-align:top; margin-right:0.1em;">R$</span> 18.000</div>
+          <div style="font-size:0.9rem; color:var(--gray-500); font-weight:300; margin-top:0.5rem;">a vista</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.08); height:100%;"></div>
+        <div>
+          <ul class="includes-list" style="list-style:none; display:flex; flex-direction:column; gap:0.7rem; padding:0;">
+            <li style="font-size:0.82rem; color:var(--gray-400); line-height:1.5; font-weight:300; display:flex; align-items:flex-start; gap:0.8rem;"><span style="color:var(--gray-600); font-size:0.7rem; flex-shrink:0; margin-top:0.15rem;">✓</span>Agente de I.A. 24/7 — Implementacao completa</li>
+            <li style="font-size:0.82rem; color:var(--gray-400); line-height:1.5; font-weight:300; display:flex; align-items:flex-start; gap:0.8rem;"><span style="color:var(--gray-600); font-size:0.7rem; flex-shrink:0; margin-top:0.15rem;">✓</span>Consultoria Claude — 2 sessoes de acompanhamento</li>
+            <li style="font-size:0.82rem; color:var(--gray-400); line-height:1.5; font-weight:300; display:flex; align-items:flex-start; gap:0.8rem;"><span style="color:var(--gray-600); font-size:0.7rem; flex-shrink:0; margin-top:0.15rem;">✓</span>Templates e prompts personalizados</li>
+            <li style="font-size:0.82rem; color:var(--gray-400); line-height:1.5; font-weight:300; display:flex; align-items:flex-start; gap:0.8rem;"><span style="color:var(--gray-600); font-size:0.7rem; flex-shrink:0; margin-top:0.15rem;">✓</span>Integracao WhatsApp, Instagram e site</li>
+            <li style="font-size:0.82rem; color:var(--gray-400); line-height:1.5; font-weight:300; display:flex; align-items:flex-start; gap:0.8rem;"><span style="color:var(--gray-600); font-size:0.7rem; flex-shrink:0; margin-top:0.15rem;">✓</span>Treinamento completo do agente com seus dados</li>
+            <li style="font-size:0.82rem; color:var(--gray-400); line-height:1.5; font-weight:300; display:flex; align-items:flex-start; gap:0.8rem;"><span style="color:var(--gray-600); font-size:0.7rem; flex-shrink:0; margin-top:0.15rem;">✓</span>Suporte direto durante todo o projeto</li>
+            <li style="font-size:0.82rem; color:var(--gray-400); line-height:1.5; font-weight:300; display:flex; align-items:flex-start; gap:0.8rem;"><span style="color:var(--gray-600); font-size:0.7rem; flex-shrink:0; margin-top:0.15rem;">✓</span>Mensalidade R$ 1.000/mes — Inclui todos custos com I.A., suporte em dias uteis e grupo VIP</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ECONOMIA C.A.F. -->
+    <div class="fade-section" style="margin-top:5rem;">
+      <div style="font-family:'Outfit',sans-serif; font-size:1.2rem; font-weight:600; letter-spacing:-0.02em; text-align:center; margin-bottom:2.5rem;">Economia comercial, administrativa e financeira</div>
+
+      <div style="position:relative; padding:2.5rem 0;">
+        <!-- Label: Desconto -->
+        <div style="position:absolute; top:-0.5rem; left:4%; display:flex; flex-direction:column; align-items:flex-start; gap:0.3rem;">
+          <div style="font-size:0.82rem; color:var(--gray-400); font-weight:400; font-style:italic; line-height:1.3; max-width:180px;">Desconto Repassado no Ato da Apresentacao</div>
+          <div style="font-size:1.3rem; margin-left:1.5rem; transform:rotate(30deg); color:#f87171;">↓</div>
+        </div>
+
+        <!-- Label: Custos C.A.F. -->
+        <div style="position:absolute; top:-1.2rem; right:32%; transform:translateX(50%); text-align:center;">
+          <div style="font-family:'Outfit',sans-serif; font-size:0.95rem; font-weight:700; letter-spacing:0.02em; margin-bottom:0.4rem;">Custos C.A.F.</div>
+          <div style="width:22px; height:22px; border-radius:50%; background:rgba(139,92,246,0.2); border:1px solid rgba(139,92,246,0.4); display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:0.6rem; color:var(--accent);">▼</div>
+        </div>
+
+        <!-- Bar -->
+        <div style="position:relative; margin-top:3rem;">
+          <div style="height:32px; background:var(--gray-800); border-radius:4px; position:relative; overflow:hidden;">
+            <!-- Striped fill -->
+            <div style="position:absolute; inset:0; background:repeating-linear-gradient(90deg, rgba(255,255,255,0.08) 0px, rgba(255,255,255,0.08) 8px, rgba(255,255,255,0.03) 8px, rgba(255,255,255,0.03) 16px);"></div>
+            <!-- Animated fill -->
+            <div class="caf-bar-fill" style="position:absolute; left:0; top:0; height:100%; width:0; background:linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.25)); border-radius:4px; transition:width 2s cubic-bezier(0.23,1,0.32,1);"></div>
+          </div>
+
+          <!-- C.A.F. marker line -->
+          <div style="position:absolute; right:28%; top:-8px; bottom:-8px; width:1px; background:rgba(255,255,255,0.15);"></div>
+
+          <!-- 1D / 30D labels -->
+          <div style="display:flex; justify-content:space-between; margin-top:0.8rem;">
+            <span style="font-family:'Outfit',sans-serif; font-size:0.85rem; font-weight:700; color:var(--gray-400);">1D</span>
+            <span style="font-family:'Outfit',sans-serif; font-size:0.85rem; font-weight:700; color:var(--gray-400);">30D</span>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div style="text-align:center; margin-top:2rem; font-size:0.85rem; color:var(--gray-500); line-height:1.7; font-weight:300; max-width:550px; margin-left:auto; margin-right:auto;">
+          Reduz o custo comercial e, em agradecimento e incentivo, <strong style="color:var(--gray-300); font-weight:500;">repassamos essa economia 100% ao cliente</strong> pelo poder de decisao.
+        </div>
+      </div>
+    </div>
+
+    <!-- CONECTOR VISUAL -->
+    <div style="display:flex; align-items:center; justify-content:center; gap:0.5rem; margin:3rem 0 0;">
+      <div style="height:1px; flex:1; max-width:80px; background:rgba(255,255,255,0.08);"></div>
+      <div style="width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.08);"></div>
+      <div style="font-size:1.2rem;">🔥</div>
+      <div style="width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.08);"></div>
+      <div style="height:1px; flex:1; max-width:80px; background:rgba(255,255,255,0.08);"></div>
+    </div>
+
+    <!-- PRECO PROTAGONISTA -->
+    <div class="pricing-grid fade-section" style="margin-top:2rem;">
+      <div class="pricing-left">
+        <div class="plabel">Preco do programa</div>
+        <h3>Preco Regular</h3>
+        <div style="border-left:2px solid var(--gray-700); padding-left:1.2rem;">
+          <div style="font-family:'Outfit',sans-serif; font-size:0.7rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--gray-600); margin-bottom:0.4rem;">Preco Regular</div>
+          <div style="font-family:'Outfit',sans-serif; font-size:2.2rem; font-weight:700; letter-spacing:-0.03em; color:var(--gray-500); text-decoration:line-through; text-decoration-color:var(--gray-700);">R$ 18.000</div>
+        </div>
+      </div>
+
+      <div class="pricing-right">
+        <div class="star">✳</div>
+        <h3>Valor Protagonista</h3>
+        <div class="price-sub">Implementacao completa</div>
+        <div class="big-price"><span class="currency">R$</span> 12.000</div>
+        <div style="margin-top:0.5rem; font-size:0.9rem; color:rgba(255,255,255,0.5); font-weight:300; position:relative; z-index:1;">a vista</div>
+        <div style="margin-top:1rem; padding:0.4rem 1rem; background:rgba(34,197,94,0.12); border:1px solid rgba(34,197,94,0.2); border-radius:100px; font-size:0.72rem; font-weight:600; letter-spacing:0.06em; color:#4ade80; position:relative; z-index:1;">Economia de R$ 6.000</div>
+
+        <div class="monthly-note">
+          <div class="mn-label">+ Mensalidade</div>
+          <div class="mn-value">R$ 1.000<span style="font-size:0.7rem; font-weight:400; color:rgba(255,255,255,0.4);">/mes</span></div>
+          <div class="mn-sub">Inclui tudo: I.A., hosting, suporte, grupo VIP</div>
+        </div>
+
+        <ul class="includes-badge">
+          <li>Todos custos de I.A. inclusos</li>
+          <li>Suporte em dias uteis</li>
+          <li>Melhorias continuas no grupo VIP</li>
+          <li>Sem fidelidade</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MENSALIDADE -->
+    <div style="margin-top:2.5rem; border:1px solid rgba(34,197,94,0.15); border-radius:20px; padding:2rem 2.5rem; background:rgba(34,197,94,0.03); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.5rem;">
+      <div>
+        <span class="tag-monthly" style="margin-bottom:0.5rem; display:inline-block;">Mensalidade</span>
+        <h3 style="font-family:'Outfit',sans-serif; font-size:1.2rem; font-weight:700; letter-spacing:-0.02em;">Funcionamento do Agente de I.A.</h3>
+        <p style="font-size:0.82rem; color:var(--gray-400); font-weight:300; margin-top:0.4rem; max-width:500px; line-height:1.5;">Inclui todos os custos com I.A., hospedagem e infraestrutura. Suporte durante dias uteis para melhorias e aprimoramentos da I.A. em grupo VIP exclusivo.</p>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-family:'Outfit',sans-serif; font-size:2.5rem; font-weight:700; letter-spacing:-0.03em;"><span style="font-size:1.2rem; font-weight:400; color:var(--gray-500); vertical-align:top;">R$</span> 1.000<span style="font-size:0.8rem; color:var(--gray-500); font-weight:400;">/mes</span></div>
+        <div style="font-size:0.75rem; color:var(--gray-500); font-weight:300;">Sem fidelidade</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- CTA -->
+  <section class="final-cta">
+    <h2>Sua I.A. trabalhando<br><span class="muted">enquanto voce descansa.</span></h2>
+    <p>Cada mensagem nao respondida e um cliente que foi pro concorrente.</p>
+  </section>
+
+  <footer>
+    <p>Proposta confidencial preparada para <span>Cristiano</span> — Abril 2026</p>
+  </footer>
+
+  <script async src="https://app.gptmaker.ai/widget/3F1C9FAB0F847340452D5E750F984287/float.js"></script>
+
+  <script>
+    // ── Intersection Observer
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.fade-section').forEach(el => obs.observe(el));
+
+    // C.A.F. bar animation
+    const cafObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const bar = e.target.querySelector('.caf-bar-fill');
+          if (bar) bar.style.width = '100%';
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.caf-bar-fill').forEach(el => cafObs.observe(el.closest('.fade-section')));
+
+    window.addEventListener('scroll', () => {
+      document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // ── ROI Calculator
+    function calcROI() {
+      const agency = parseInt(document.getElementById('slider-agency').value);
+      const lost = parseInt(document.getElementById('slider-lost').value);
+      const ticket = parseInt(document.getElementById('slider-ticket').value);
+
+      document.getElementById('val-agency').textContent = 'R$ ' + agency.toLocaleString('pt-BR') + '/mes';
+      document.getElementById('val-lost').textContent = '~' + lost + ' contatos';
+      document.getElementById('val-ticket').textContent = 'R$ ' + ticket.toLocaleString('pt-BR');
+
+      const lostRevenue = lost * ticket;
+      const recovered = Math.round(lostRevenue * 0.30);
+      const annualAgency = agency * 12;
+      const annualAI = 12000 + (1000 * 12); // protagonista implementation + 12 months
+      const annualRecovered = recovered * 12;
+      const roi = Math.round(((annualRecovered + (annualAgency - annualAI)) / annualAI) * 100);
+
+      document.getElementById('roi-lost').textContent = 'R$ ' + lostRevenue.toLocaleString('pt-BR');
+      document.getElementById('roi-recovered').textContent = 'R$ ' + recovered.toLocaleString('pt-BR');
+      document.getElementById('roi-total').textContent = Math.max(0, roi) + '%';
+
+      // Comparison bars
+      const maxBarVal = Math.max(annualAgency, annualAI);
+      const agencyPct = (annualAgency / maxBarVal * 100);
+      const aiPct = (annualAI / maxBarVal * 100);
+
+      document.getElementById('bar-agency').style.setProperty('--bar-w', agencyPct + '%');
+      document.getElementById('bar-agency-val').textContent = 'R$ ' + annualAgency.toLocaleString('pt-BR') + '/ano';
+      document.getElementById('bar-ai').style.setProperty('--bar-w', aiPct + '%');
+      document.getElementById('bar-ai-val').textContent = 'R$ ' + annualAI.toLocaleString('pt-BR') + '/ano';
+
+      const savings = annualAgency - annualAI;
+      const savingsEl = document.getElementById('savings-val');
+      if (savings > 0) {
+        savingsEl.textContent = 'R$ ' + savings.toLocaleString('pt-BR');
+        savingsEl.style.color = '#4ade80';
+        document.getElementById('savings-sub').textContent = 'E ainda ganha atendimento 24h + autonomia na criacao de conteudo';
+      } else {
+        savingsEl.textContent = 'R$ ' + Math.abs(savings).toLocaleString('pt-BR') + ' a mais';
+        savingsEl.style.color = '#fbbf24';
+        document.getElementById('savings-sub').textContent = 'Mas voce ganha atendimento 24h, leads qualificados e autonomia em conteudo';
+      }
+    }
+
+    calcROI();
+
+    // ── Agent Chat Simulation
+    const chatMessages = [
+      { type: 'client', text: 'Oi, vi o anuncio de voces no Instagram. Ainda tem disponibilidade essa semana?', delay: 800 },
+      { type: 'bot', text: 'Ola! 😊 Que bom que nos encontrou! Sim, temos disponibilidade essa semana. Posso te ajudar a agendar agora mesmo. Qual dia e horario funcionam melhor pra voce?', delay: 1500 },
+      { type: 'client', text: 'Quinta de tarde tem?', delay: 2200 },
+      { type: 'bot', text: 'Quinta a tarde temos os horarios das <strong>14h, 15h30 e 17h</strong> disponiveis. Qual prefere? 📅', delay: 3000 },
+      { type: 'client', text: '15:30 ta otimo', delay: 3800 },
+      { type: 'bot', text: 'Perfeito! Agendei pra <strong>quinta-feira as 15h30</strong>. Vou te enviar uma confirmacao com o endereco e tudo que voce precisa saber. Seu nome completo pra eu reservar? 🙏', delay: 4600 },
+    ];
+
+    function runChatDemo() {
+      const chat = document.getElementById('agent-chat');
+      chatMessages.forEach((msg, i) => {
+        setTimeout(() => {
+          const div = document.createElement('div');
+          div.className = 'agent-msg ' + msg.type;
+          div.innerHTML = msg.text;
+          div.style.opacity = '0';
+          div.style.transform = 'translateY(10px)';
+          chat.appendChild(div);
+          requestAnimationFrame(() => {
+            div.style.transition = 'all 0.4s ease';
+            div.style.opacity = '1';
+            div.style.transform = 'translateY(0)';
+          });
+          chat.scrollTop = chat.scrollHeight;
+        }, msg.delay);
+      });
+    }
+
+    // Trigger chat when section is visible
+    const chatObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          runChatDemo();
+          chatObs.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    const agentDemo = document.querySelector('.agent-demo');
+    if (agentDemo) chatObs.observe(agentDemo);
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        const t = document.querySelector(this.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+
+</body>
+</html>
